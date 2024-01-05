@@ -5,7 +5,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm bg-white">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          <strong>MERN Auto Save</strong>
+          <strong>Blog Overflow</strong>
         </a>
         <button
           className="navbar-toggler"

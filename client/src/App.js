@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Blog from "./pages/Blog";
 import Header from "./components/Header";
+import BlogPage from "./pages/BlogPage";
+import BlogCommentPage from "./pages/BlogCommentPage";
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<Create />} />
           <Route path="/blog/:id" element={<Blog />} />
+          <Route path="/blog/new/:blogId" element={<BlogCommentPage/>} />
+          <Route path="/blogs/:blogId" element={<BlogPage/>} /> 
         </Routes>
       </div>
     </Router>

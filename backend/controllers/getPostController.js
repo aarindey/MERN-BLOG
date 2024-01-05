@@ -4,7 +4,7 @@ const Post = require("../models/post");
 const getPost = async (req, res) => {
   try {
     // Attempt to find the post by its ID
-    const post = await Post.findById(req.params.postId);
+    const post = await Post.find({ post_id: req.params.postId });
 
     // If the post was not found, return a 404 error
     if (!post) {

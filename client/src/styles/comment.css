@@ -1,0 +1,89 @@
+/* comment styling */
+.container {
+  max-width: 90%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 0 10px rgb(243, 150, 150);
+}
+
+.comment_item {
+  color: blue;
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.comment_btn {
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.comment_input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.nested_comment_items {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #007bff;
+}
+
+.nested_comment_items li {
+  margin-bottom: 10px;
+}
+
+.reply_box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button,
+textarea {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Style cancel button differently */
+button.cancel {
+  background-color: #ccc;
+  color: #333;
+  margin: 8px;
+}
+
+button.cancel:hover {
+  background-color: #999;
+}
+
+button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 14px;
+  padding: 4px 8px;
+  color: rgba(0, 0, 0, 0.85);
+  background-color: rgb(122, 106, 142);
+  border: 1px solid rgba(194, 54, 54, 0.2);
+  border-radius: 4px;
+}
+
+
+/* text area styling  */
+textarea {
+  padding: 10px;
+  max-width: 100%;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
+  font-size: 20px;
+  font-style: Ubuntu;
+  letter-spacing: 1px;
+}

@@ -8,6 +8,7 @@ const connectToDB = async () => {
     await mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      
     });
 
     // Log a message when the connection is successful

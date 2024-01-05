@@ -5,6 +5,9 @@ const cors = require("cors");
 const path = require("path"); // Path module for working with file paths
 require("dotenv").config(); // Load environment variables from a .env file
 
+
+
+
 // Import routes for handling posts
 const postsRouter = require("./routes/posts");
 
@@ -36,6 +39,8 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
+
+
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {

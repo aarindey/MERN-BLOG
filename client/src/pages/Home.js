@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <div>
       {posts.map((post) => (
-        <BlogCard post={post} setPosts={setPosts} />
+        <BlogCard key={post.post_id} post={post} setPosts={setPosts} />
       ))}
     </div>
   );
