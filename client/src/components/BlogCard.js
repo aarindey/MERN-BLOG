@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import config from "../config.json";
 import commentLogo from "../img/comment-icon.svg";
 
-
 const BlogCard = ({ post, setPosts }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -44,7 +43,7 @@ const BlogCard = ({ post, setPosts }) => {
             {expanded ? "Collapse" : "Expand"}
           </button>
           <a href={`/blog/new/${post.post_id}`} className="comment_btn ms-auto">
-          <img src={commentLogo} alt="problem" className='logo'/>
+            <img src={commentLogo} alt="problem" className="logo" />
           </a>
           <a href={`/blog/${post.post_id}`} className="btn btn-primary ">
             Edit

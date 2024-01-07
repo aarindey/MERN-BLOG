@@ -40,12 +40,10 @@ const CreatePostForm = ({ onPost }) => {
         navigate("/");
         setloading(false);
       }, 500);
-      
     } else {
       alert("Please fill in both title and content fields.");
       setloading(false);
     }
-    
   };
 
   while (loading) {
