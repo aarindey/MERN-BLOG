@@ -30,7 +30,7 @@ const Header = ({ user, loginWithRedirect, isAuthenticated, logout }) => {
                     style={{ width: "30px", height: "30px" }}
                   />
                   <a className="nav-link active" href="/profile">
-                    Welcome, {user.nickname}
+                    Welcome, {user.name}
                   </a>
                 </div>
               ) : (
