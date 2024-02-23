@@ -5,6 +5,7 @@ import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import axios from "axios";
+import config from "../config.json";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -50,7 +51,7 @@ const SignUp = () => {
             <Button
               onClick={async () => {
                 const response = await axios.post(
-                  "http://localhost:3000/api/v1/user/signup",
+                  `${config.API_URL}/api/users/signup`,
                   {
                     firstname: firstName,
                     lastname: lastName,

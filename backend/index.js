@@ -5,11 +5,10 @@ const cors = require("cors");
 const path = require("path"); // Path module for working with file paths
 require("dotenv").config(); // Load environment variables from a .env file
 
-
-
-
 // Import routes for handling posts
 const postsRouter = require("./routes/posts");
+
+const usersRouter = require("./routes/users");
 
 // Import database connection function from config
 const { connectToDB } = require("./config/db");
@@ -26,11 +25,15 @@ app.use(cors());
 // Parse incoming JSON requests
 app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Connect to the MongoDB database
 connectToDB();
 
 // Set up routes for handling posts
 app.use("/api/posts", postsRouter);
+
+app.use("/api/users", usersRouter);
 
 // Serve static files from the "client/build" directory
 app.use(express.static(path.join(__dirname, "../client/build")));
@@ -39,8 +42,6 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
-
-
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
