@@ -18,9 +18,10 @@ const BlogEditor = ({ postId }) => {
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const response = await axios.get(`${config.API_URL}/api/posts/${postId}`);
-        const {title,content}=response.data[0];
-        //console.log("Soujash gandu : ", response.data[0].title);
+        const response = await axios.get(
+          `${config.API_URL}/api/posts/${postId}`
+        );
+        const { title, content } = response.data[0];
         setTitle(title);
         setContent(content);
       } catch (error) {
@@ -105,5 +106,4 @@ const BlogEditor = ({ postId }) => {
     </div>
   );
 };
-
 export default BlogEditor;
