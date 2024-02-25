@@ -1,14 +1,12 @@
-// CreatePostForm.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import "../styles/createPost/CreatePostForm.css"
 const CreatePostForm = ({ onPost }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setloading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const token = "Bearer " + localStorage.getItem("token");
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -17,44 +15,32 @@ const CreatePostForm = ({ onPost }) => {
   const handleContentChange = (e) => {
     e.preventDefault();
     setContent(e.target.value);
-    // Set the height of the textarea to its scrollHeight
     const textarea = document.getElementById("contentTextarea");
     if (textarea) {
-      // textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
     }
     document.documentElement.style.scrollBehavior = "auto";
   };
 
-  const handlePostClick = () => {
-    setloading(true);
-    // Validate data if needed
+  const handlePostClick = async () => {
+    setLoading(true);
     if (title.trim() !== "" && content.trim() !== "") {
-      // Send data to the parent component
-      onPost({ title, content });
-
-      // Clear the form
-      setTitle("");
-      setContent("");
-      setTimeout(() => {
+      try {
+        await onPost({ title, content }, { headers: { Authorization: token } });
+        setTitle("");
+        setContent("");
         navigate("/");
-        setloading(false);
-      }, 500);
+      } catch (error) {
+        console.error("Error while creating blog ", error);
+        navigate("/login");
+      } finally {
+        setLoading(false);
+      }
     } else {
       alert("Please fill in both title and content fields.");
-      setloading(false);
+      setLoading(false);
     }
   };
-
-  while (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-5 pt-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="create-post-form">
@@ -86,7 +72,7 @@ const CreatePostForm = ({ onPost }) => {
       </div>
       <div className="hstack">
         <button className="btn btn-success ms-auto" onClick={handlePostClick}>
-          Post
+          {loading ? "Posting..." : "Post"}
         </button>
       </div>
     </div>

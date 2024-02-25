@@ -4,18 +4,20 @@ import { Button } from "../components/Button";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import config from "../config.json";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import config from "../config.json";
 
-const SignIn = () => {
-  const [username, setUsername] = useState("");
+const SignUp = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const successToast = () =>
-    toast.success("Successfully, logged In!", {
+    toast.success("Successfully, Signed Up!", {
       position: "bottom-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -24,7 +26,7 @@ const SignIn = () => {
       theme: "light",
     });
   const failureToast = () =>
-    toast.warn("Log In failed. Try again!", {
+    toast.warn("Sign Up failed. Try again!", {
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -34,25 +36,39 @@ const SignIn = () => {
       progress: undefined,
       theme: "light",
     });
-  const token = "Bearer " + localStorage.getItem("token");
+
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
       <div className="flex flex-col justify-center">
         <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
-          <Heading label={"Sign in"} />
-          <SubHeading label={"Enter your credentials to access your account"} />
+          <Heading label={"Sign up"} />
+          <SubHeading label={"Enter your infromation to create an account"} />
           <InputBox
-            placeholder="janedoe@gmail.com"
             onChange={(e) => {
-              setUsername(e.target.value);
+              setFirstName(e.target.value);
             }}
+            placeholder="Jane"
+            label={"First Name"}
+          />
+          <InputBox
+            onChange={(e) => {
+              setLastName(e.target.value);
+            }}
+            placeholder="Doe"
+            label={"Last Name"}
+          />
+          <InputBox
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="janedoe@gmail.com"
             label={"Email"}
           />
           <InputBox
-            placeholder="abc123"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            placeholder="abc123"
             label={"Password"}
           />
           <div className="pt-4">
@@ -60,43 +76,35 @@ const SignIn = () => {
               onClick={async () => {
                 try {
                   const response = await axios.post(
-                    `${config.API_URL}/api/users/login`,
+                    `${config.API_URL}/api/users/signup`,
                     {
-                      username,
-                      password,
-                    },
-                    {
-                      headers: {
-                        Authorization: token,
-                      },
+                      firstname: firstName,
+                      lastname: lastName,
+                      username: email,
+                      password: password,
                     }
                   );
-                  console.log(response);
                   localStorage.setItem("token", response.data.token);
                   successToast();
                   setTimeout(() => {
-                    // using window and not useNavigate to force reload
                     window.location.href = "/";
                   }, 2500);
-
-                  // Handle successful response here
                 } catch (error) {
-                  // Handle error (e.g., show error message to the user)
-                  console.error("Error during sign-in:", error);
+                  console.log("Error while signing up ", error);
                   failureToast();
                 }
               }}
-              label={"Sign in"}
+              label={"Sign up"}
             />
           </div>
           <BottomWarning
-            label={"Don't have an account?"}
-            buttonText={"Sign up"}
-            to={"/signup"}
+            label={"Already have an account?"}
+            buttonText={"Sign in"}
+            to={"/login"}
           />
           <ToastContainer
             position="bottom-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -112,4 +120,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

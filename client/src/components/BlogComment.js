@@ -1,6 +1,4 @@
-// BlogEditor.js
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
 import "../styles/blog/BlogEditor.css";
 import config from "../config.json";
@@ -19,10 +17,7 @@ const BlogComment = ({ postId }) => {
         `${config.API_URL}/api/posts/comments/${postId}`
       );
       const newComments = response.data;
-      //const filteredComments = response.data.comments.filter(comment => comment.parent_id === null);
-      //console.log("see : ", filteredComments);
       setComments(newComments.comments);
-      //setComments(filteredComments);
     };
     loadComments();
   }, [postId, comments]);
@@ -59,11 +54,7 @@ const BlogComment = ({ postId }) => {
     axios
       .post(apiUrl, newCommentData)
       .then((response) => {
-        console.log("Comment Post successful:", response.data);
-        // const filteredComments=response.data.parent_id===null?[response.data,...comments]:comments;
-        // setComments(filteredComments);
         setComments((prevComments) => [...prevComments, response.data]);
-        console.log(" after addition : ", comments);
       })
       .catch((error) => {
         console.error("Error posting comment data:", error);
@@ -80,9 +71,7 @@ const BlogComment = ({ postId }) => {
     axios
       .post(apiUrl, newReplyComment)
       .then((response) => {
-        console.log("Comment Post successful:", response.data);
         setComments((prevComments) => [...prevComments, response.data]);
-        console.log(" after addition : ", comments);
       })
       .catch((error) => {
         console.error("Error posting comment data:", error);
@@ -106,7 +95,7 @@ const BlogComment = ({ postId }) => {
         />
         <br />
         <button
-          className="border-[1px] rounded-full border-zinc-400 w-20"
+          className="border-[1px] border-zinc-400 w-30 bg-blue-600  hover:bg-sky-700 text-white px-2 py-1"
           onClick={addComment}
         >
           Add Comment

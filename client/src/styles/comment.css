@@ -14,7 +14,6 @@
 }
 
 .comment_btn {
-  color: #fff;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -47,10 +46,6 @@ textarea {
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
 /* Optional: Style cancel button differently */
 button.cancel {
   background-color: #ccc;
@@ -69,7 +64,6 @@ button {
   font-size: 14px;
   padding: 4px 8px;
   color: rgba(0, 0, 0, 0.85);
-  background-color: rgb(122, 106, 142);
   border: 1px solid rgba(194, 54, 54, 0.2);
   border-radius: 4px;
 }
