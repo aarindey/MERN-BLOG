@@ -5,7 +5,6 @@ import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../config.json";
 
@@ -15,7 +14,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
   const successToast = () =>
     toast.success("Successfully, Signed Up!", {
       position: "bottom-right",
@@ -89,8 +87,8 @@ const SignUp = () => {
                   localStorage.setItem("token", response.data.token);
                   successToast();
                   setTimeout(() => {
-                    navigate("/");
-                  }, 2000);
+                    window.location.href = "/";
+                  }, 2500);
                 } catch (error) {
                   console.log("Error while signing up ", error);
                   failureToast();

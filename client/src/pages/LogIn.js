@@ -4,7 +4,6 @@ import { Button } from "../components/Button";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import config from "../config.json";
@@ -13,7 +12,6 @@ import axios from "axios";
 const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const successToast = () =>
     toast.success("Successfully, logged In!", {
       position: "bottom-right",
@@ -59,8 +57,7 @@ const SignIn = () => {
           />
           <div className="pt-4">
             <Button
-              onClick={async (event) => {
-                event.preventDefault();
+              onClick={async () => {
                 try {
                   const response = await axios.post(
                     `${config.API_URL}/api/users/login`,
@@ -75,10 +72,13 @@ const SignIn = () => {
                     }
                   );
                   console.log(response);
+                  localStorage.setItem("token", response.data.token);
                   successToast();
                   setTimeout(() => {
-                    navigate("/");
-                  }, 2000);
+                    // using window and not useNavigate to force reload
+                    window.location.href = "/";
+                  }, 2500);
+
                   // Handle successful response here
                 } catch (error) {
                   // Handle error (e.g., show error message to the user)

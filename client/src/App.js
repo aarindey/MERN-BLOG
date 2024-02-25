@@ -1,5 +1,4 @@
-// App.js
-import React from "react";
+import React, { useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
@@ -9,11 +8,16 @@ import BlogPage from "./pages/BlogPage";
 import BlogCommentPage from "./pages/BlogCommentPage";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/LogIn";
+import Profile from "./pages/Profile";
 
 const App = () => {
+  // Create a ref
+  const headerRef = useRef();
+
   return (
     <Router>
-      <Header />
+      {/* Pass ref as a prop to the Header component */}
+      <Header ref={headerRef} />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,6 +27,7 @@ const App = () => {
           <Route path="/blogs/:blogId" element={<BlogPage />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>

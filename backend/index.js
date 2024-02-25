@@ -10,6 +10,8 @@ const postsRouter = require("./routes/posts");
 
 const usersRouter = require("./routes/users");
 
+const meRouter = require("./routes/tokenvalidation");
+
 // Import database connection function from config
 const { connectToDB } = require("./config/db");
 
@@ -34,6 +36,8 @@ connectToDB();
 app.use("/api/posts", postsRouter);
 
 app.use("/api/users", usersRouter);
+
+app.use("/api", meRouter);
 
 // Serve static files from the "client/build" directory
 app.use(express.static(path.join(__dirname, "../client/build")));

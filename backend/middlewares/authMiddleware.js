@@ -5,6 +5,7 @@ const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     res.status(403).json({
+      success: false,
       message: "Unauthorized... Missing auth token1!!",
     });
   }
@@ -12,6 +13,7 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader.split(" ")[1];
   if (!token) {
     res.status(403).json({
+      success: false,
       message: "Unauthorized... Missing auth token2!!",
     });
   }
@@ -23,6 +25,7 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (err) {
     res.status(403).json({
+      success: false,
       message: "Unauthorized... Invalid Token3!!",
     });
   }
