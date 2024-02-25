@@ -1,11 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import config from "../config.json";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Header = ({ user, loginWithRedirect, isAuthenticated, logout }) => {
+const Header = () => {
+  const successToast = () =>
+    toast.success("Logging out!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchProfile("Bearer " + token);
+    } else {
+      setIsAuth(false);
+    }
+  }, []);
+
+  const fetchProfile = async (token) => {
+    const apiUrl = `${config.API_URL}/api/me`;
+    try {
+      const response = await axios.post(
+        apiUrl,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+      if (response.data.success) {
+        setIsAuth(true);
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      setIsAuth(false);
+    }
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    successToast();
+    setTimeout(() => {
+      // using window and not useNavigate to force reload
+      window.location.href = "/login";
+    }, 2500);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm bg-white">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          <strong>Blog Overflow</strong>
+          <strong>IntelliBlog Hub</strong>
         </a>
         <button
           className="navbar-toggler"
@@ -18,73 +75,78 @@ const Header = ({ user, loginWithRedirect, isAuthenticated, logout }) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              {isAuthenticated ? (
-                <div className="d-flex align-items-center">
-                  <img
-                    src={user.picture}
-                    alt="Profile"
-                    className="rounded-circle me-2"
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                  <a className="nav-link active" href="/profile">
-                    Welcome, {user.name}
-                  </a>
-                </div>
-              ) : (
-                <p className="nav-link active">Welcome</p>
-              )}
-            </li>
-            <li className="nav-item">
-              {isAuthenticated ? (
-                <a className="nav-link active" href="/profile">
+        <div id="navbarSupportedContent">
+          <ul className="flex flex-row items-center space-x-4 ml-auto">
+            {isAuth && (
+              <li className="nav-item">
+                <a
+                  className="text-gray-800 hover:text-gray-600"
+                  href="/profile"
+                  aria-current="page"
+                >
                   Profile
                 </a>
-              ) : (
-                <a className="nav-link active" href="/login">
-                  Profile
-                </a>
-              )}
+              </li>
+            )}
+            <li className="nav-item">
+              <a
+                className="text-gray-800 hover:text-gray-600"
+                href="/"
+                aria-current="page"
+              >
+                Home
+              </a>
             </li>
             <li className="nav-item">
-              {isAuthenticated ? (
-                <a className="nav-link active" href="/">
-                  Home
-                </a>
-              ) : (
-                <a className="nav-link active" href="/login">
-                  Home
-                </a>
-              )}
+              <a className="text-gray-800 hover:text-gray-600" href="/create">
+                Create
+              </a>
             </li>
-            <li className="nav-item">
-              {isAuthenticated ? (
-                <a className="nav-link active" href="/create">
-                  Create
-                </a>
-              ) : (
-                <a className="nav-link active" href="/login">
-                  Create
-                </a>
-              )}
-            </li>
-            <li className="nav-item">
-              {!isAuthenticated ? (
-                <button
-                  onClick={(e) => loginWithRedirect()}
-                  className="nav-link active"
+            {!isAuth && (
+              <li className="nav-item">
+                <a
+                  className="text-gray-800 hover:text-gray-600"
+                  href="/login"
+                  aria-current="page"
                 >
                   LogIn
+                </a>
+              </li>
+            )}
+            {isAuth && (
+              <li className="nav-item">
+                <button
+                  onClick={handleLogOut}
+                  className="text-gray-800 hover:text-gray-600 focus:outline-none border-b-2 border-transparent hover:border-gray-500 px-4 py-2"
+                >
+                  LogOut
                 </button>
-              ) : (
-                <button onClick={(e) => logout()} className="nav-link active">
-                  Logout
-                </button>
-              )}
-            </li>
+              </li>
+            )}
+            {!isAuth && (
+              <li className="nav-item">
+                <a
+                  className="text-gray-800 hover:text-gray-600"
+                  href="/signup"
+                  aria-current="page"
+                >
+                  SignUp
+                </a>
+              </li>
+            )}
           </ul>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
       </div>
     </nav>
